@@ -36,6 +36,10 @@ export class DocsService {
     return await this.docTypeRepository.findOneOrFail({where : {id} });
   }
 
+  async findAllDocTypes(): Promise<DocType[]>{
+    return await this.docTypeRepository.find();
+  }
+
   async search(typeId:number,number:string){
     return await this.docRepository.findOne({where : { docType : {id : typeId}, number },order : { created_at : 'DESC' }});
   }
