@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { DocsService } from './docs.service';
 import { CreateDocDto } from './dto/create-doc.dto';
 import { UpdateDocDto } from './dto/update-doc.dto';
@@ -23,8 +24,10 @@ export class DocsController {
   }
 
   @Get('/search/:type/:number')
-  async findDocument(@Param('type') type : number, @Param('number') number : string){
-    return await this.docsService.search(type,number);
+  async findDocument(@Param('type') type : number, @Param('number') number : string, @Res() res: Response){
+    let doc = await this.docsService.search(type,number);
+    if(doc) return  res.send(doc);
+    return res.status(HttpStatus.NOT_FOUND).send('the document is not in Database yet.');
   }
 
   @Patch(':id')
