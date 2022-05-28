@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Doc } from "./doc.entity";
+import { EnabledNotification } from "./enabled-notifications.entity";
 
 @Entity()
 export class DocType {
@@ -12,4 +13,7 @@ export class DocType {
 
     @OneToMany( () => Doc, (doc) => doc.docType )
     docs : Doc[];
+
+    @OneToMany( () => EnabledNotification, (enabledNotification) => enabledNotification.docType )
+    enabledNotifications : EnabledNotification[];
 }
