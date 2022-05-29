@@ -15,15 +15,9 @@ async function bootstrap() {
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://perdidocs-aca5b.firebaseio.com",
   });
-  /* await admin.messaging().sendToDevice("e0vene_TXOPruuFYcfFnt:APA91bGYFITloVUWKxrI4qW6k2g31u6rUjtQwGtWpn0c_O4n4Hb5zlsn7mdITi4d1GUNXK_Lw-90RD3UKaQT2EIpPGWTDHT2zlViiy01Dygc4rJ_jiDpCYW1Rvv3WQ3993k1bt99PoEh", {
-    notification : {
-      title : "Hello",
-      body : "Esto es una prueba"
-    }
-  }); */
   
   app.enableCors();
-  app.useGlobalPipes(new ValidationPipe({skipMissingProperties : true}));
+  app.useGlobalPipes(new ValidationPipe({skipMissingProperties : true, whitelist : true}));
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   await app.listen(process.env.PORT || 3000);
 }
