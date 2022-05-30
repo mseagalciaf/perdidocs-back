@@ -7,7 +7,6 @@ export class EnabledNotificationDto{
     @IsString()
     registryToken : string;
 
-    @IsDefined()
     @IsEmail()
     email : string;
 
@@ -21,11 +20,9 @@ export class EnabledNotificationDto{
     @MinLength(5)
     number : string;
 
-    @IsDefined()
     @IsBoolean()
     viaEmail : boolean
 
-    @IsDefined()
     @IsBoolean()
     viaPush : boolean
 

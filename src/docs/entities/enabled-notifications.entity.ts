@@ -19,9 +19,9 @@ export class EnabledNotification{
     @Column()
     number : string;
 
-    @Column()
+    @Column({default : true})
     viaEmail : boolean
 
-    @Column()
+    @Column({default : true})
     viaPush : boolean
 }

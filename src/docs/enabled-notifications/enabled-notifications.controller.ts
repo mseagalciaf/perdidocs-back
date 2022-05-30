@@ -1,4 +1,5 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, ParseIntPipe, Post, Put, Res } from '@nestjs/common';
+import { Response } from 'express';
 import { EnabledNotificationDto } from '../dto/enabled-notification.dto';
 import { GetEnabledNotificationByTokenDto } from '../dto/get-enabled-notification-by-token.dto';
 import { UpdateEnabledNotificationDto } from '../dto/update-enabled-notification.dto';
@@ -11,18 +12,25 @@ export class EnabledNotificationsController {
         private _notificationService : NotificationService
     ){}
 
-    @Get()
-    async findOnes(@Body() data : GetEnabledNotificationByTokenDto ){
-        return await this._notificationService.getByRegistryToken(data.registryToken);
+    @Get(':registryToken')
+    async findOnes(@Param('registryToken') registryToken: string){
+        return await this._notificationService.getByRegistryToken(registryToken);
     }
 
     @Post()
-    async create(@Body() enabledNotificationDto: EnabledNotificationDto) {
-        return await this._notificationService.create(enabledNotificationDto);
+    async create(@Body() enabledNotificationDto: EnabledNotificationDto, @Res() res : Response ) {
+        let enabledNotification = await this._notificationService.getByDocumentByRegistrytoken(enabledNotificationDto);
+        if(enabledNotification) return res.status(HttpStatus.BAD_REQUEST).json({'message' : 'notification already exists'});
+        return res.send(this._notificationService.create(enabledNotificationDto));
     }
 
     @Put()
-    update( @Body() UpdateEnabledNotificationDto: UpdateEnabledNotificationDto) {
-        return this._notificationService.update(UpdateEnabledNotificationDto);
+    async update( @Body() UpdateEnabledNotificationDto: UpdateEnabledNotificationDto) {
+        return await this._notificationService.update(UpdateEnabledNotificationDto);
+    }
+
+    @Delete(':id')
+    async delete( @Param('id', ParseIntPipe) id: number ) {
+        return await this._notificationService.delete(id);
     }
 }

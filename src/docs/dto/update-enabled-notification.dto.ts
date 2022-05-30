@@ -7,7 +7,7 @@ export class UpdateEnabledNotificationDto{
     @IsInt()
     id : number;
 
-    @IsEmail()
+    // @IsEmail()
     email : string;
 
     @IsInt()

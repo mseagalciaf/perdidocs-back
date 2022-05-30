@@ -27,10 +27,25 @@ export class NotificationService {
     }
 
     async getByRegistryToken(registryToken : string){
-        return await this._enabledNotificationRepository.findBy({registryToken});
+        return await this._enabledNotificationRepository.find({
+            where : { registryToken },
+            relations : ["docType"]
+        });
     }
 
     async update(enabledNotification : UpdateEnabledNotificationDto){
-        return await this._enabledNotificationRepository.save(enabledNotification);
+        return await this._enabledNotificationRepository.update(enabledNotification.id,enabledNotification);
+    }
+
+    async delete(enabledNotificationId : number){
+        return await this._enabledNotificationRepository.delete(enabledNotificationId);
+    }
+
+    async getByDocumentByRegistrytoken(enabledNotification : EnabledNotificationDto){
+        return await this._enabledNotificationRepository.findOneBy({
+            docType : { id : enabledNotification.docTypeId}, 
+            number : enabledNotification.number,
+            registryToken : enabledNotification.registryToken
+        });
     }
 }
