@@ -1,9 +1,9 @@
 {
     "type": "mysql",
-    "host": "sql5.freemysqlhosting.net",
-    "username": "sql5494218",
-    "password": "MNgQtqxYty",
-    "database": "sql5494218",
+    "host": "localhost",
+    "username": "root",
+    "password": "",
+    "database": "test",
     "port": 3306,
     "synchronize": true,
     "entities": ["src/modules/**/**/*.entity{.ts,.js}"],
