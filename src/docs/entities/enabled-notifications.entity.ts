@@ -9,7 +9,7 @@ export class EnabledNotification{
     @Column()
     registryToken : string;
 
-    @Column()
+    @Column({nullable : true})
     email : string;
 
     @ManyToOne( () => DocType, docType => docType.docs)
